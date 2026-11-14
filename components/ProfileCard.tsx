@@ -36,6 +36,8 @@ export default function ProfileCard({ postCount }: { postCount: number }) {
   }, [authorName]);
 
   const loadProfileImage = async () => {
+    if (!supabase) return;
+    
     const fileName = `${authorName.toLowerCase()}.jpg`;
     const { data } = await supabase
       .storage
@@ -101,6 +103,11 @@ export default function ProfileCard({ postCount }: { postCount: number }) {
     setIsUploading(true);
 
     try {
+      if (!supabase) {
+        alert('Supabase is not configured');
+        return;
+      }
+
       const fileName = `${authorName.toLowerCase()}.jpg`;
       const { error: uploadError } = await supabase
         .storage
@@ -124,6 +131,11 @@ export default function ProfileCard({ postCount }: { postCount: number }) {
 
   const handleRemoveImage = async () => {
     try {
+      if (!supabase) {
+        alert('Supabase is not configured');
+        return;
+      }
+
       const fileName = `${authorName.toLowerCase()}.jpg`;
       const { error: deleteError } = await supabase
         .storage

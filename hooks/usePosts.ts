@@ -53,6 +53,12 @@ export function usePosts(authorName: string): UsePostsReturn {
   }, []);
 
   const fetchPosts = useCallback(async (cursor: string | null = null) => {
+    if (!supabase) {
+      setError('Supabase is not configured');
+      setLoading(false);
+      return;
+    }
+
     try {
       setError(null);
       
@@ -136,7 +142,7 @@ export function usePosts(authorName: string): UsePostsReturn {
     };
 
     // Initialize global channel if not exists
-    if (!globalChannel) {
+    if (!globalChannel && supabase) {
       const channelName = 'posts-realtime';
       
       globalChannel = supabase

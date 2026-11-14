@@ -49,6 +49,11 @@ export default function Home() {
   }, []);
 
   const handleShare = async (message: string, imageFile?: File) => {
+    if (!supabase) {
+      setShareError('Supabase is not configured. Please set environment variables.');
+      return;
+    }
+
     const tempId = `temp-${Date.now()}`;
     const tempPost: Post = {
       id: tempId,
