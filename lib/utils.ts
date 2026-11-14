@@ -57,6 +57,9 @@ export function prefersReducedMotion(): boolean {
 export async function getProfileImage(author: string): Promise<string | null> {
   try {
     const { supabase } = await import('@/lib/supabase');
+    
+    if (!supabase) return null;
+    
     const fileName = `${author.toLowerCase()}.jpg`;
     const { data } = await supabase
       .storage
